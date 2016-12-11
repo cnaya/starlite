@@ -34,7 +34,7 @@ $(document).ready(function () {
             return;
         }
         var dialog = layer.load();
-        $.post('/user/edit', {name: name, about: about}, function (result) {
+        $.post('/user/edit/info', {name: name, about: about}, function (result) {
             layer.close(dialog);
             layer.alert(result.message);
         });
