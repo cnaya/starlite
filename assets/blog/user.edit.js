@@ -60,7 +60,7 @@ $(document).ready(function () {
                 new_password = text;
                 layer.close(index);
                 var dialog = layer.load();
-                $.post("/user/edit", {oldPassword: old_password, newPassword: new_password}, function (result) {
+                $.post("/user/edit/password", {oldPassword: old_password, newPassword: new_password}, function (result) {
                     layer.close(dialog)
                     layer.alert(result.message);
                     if (result.ok) {
