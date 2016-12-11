@@ -27,3 +27,10 @@
 *.exe
 *.out
 *.app
+
+nbproject/
+/assets/assets/editor.md/docs/
+/assets/assets/editor.md/examples/
+/assets/assets/editor.md/scss/
+/assets/assets/editor.md/tests/
+/assets/assets/editor.md/src/

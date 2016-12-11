@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        {{{head}}}
+        <link href="/assets/editor.md/css/editormd.min.css" rel="stylesheet">
+        <meta name="description" content="发布文章">
+        <title>发布文章</title>
+    </head>
+    <body>
+        {{{nav}}}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10" id="article-edit">
+                    <input type="text" class="form-control" id="inputHead" placeholder="标题">
+                    <textarea style="resize: none;" rows="5" class="form-control" id="inputAbstract">摘要</textarea>
+                    <div id="inputBody"></div>
+                    <input type="text" class="form-control" id="inputKeywords" placeholder="关键字">
+                    <div class="radio pull-right">
+                        <label>
+                            <input type="radio"  name="inputPublish" value="1" checked> 公开
+                        </label>
+                        <label>
+                            <input type="radio"  name="inputPublish" value="0"> 不公开
+                        </label>
+                    </div>
+                    <button id="article-submit" type="submit" class="btn btn-default btn-block">提交</button>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            {{{footer}}}
+        </div> <!-- /container -->
+        {{{script}}}
+        <script src="/assets/editor.md/editormd.min.js"></script>
+        <script src="/assets/blog/article.edit.js"></script>
+    </body>
+</html>
+
+

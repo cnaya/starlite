@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        {{{head}}}
+        <title>{{{title}}}</title>
+        <meta name="description" content="{{abstract}}">
+        <link href="/assets/editor.md/css/editormd.preview.css" rel="stylesheet">
+    </head>
+    <body>
+        {{{nav}}}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">目录</div>
+                                <div class="panel-body markdown-body editormd-preview-container" id="toc-container"></div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">二维码</div>
+                                <div class="panel-body">
+                                    <img id="qrcode" src="/blog/qrcode/{{pid}}" class="img-responsive" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">{{title}}</div>
+                        <div class="panel-body">
+                            <p class="text-success">{{abstract}}</p>
+                            <p class="text-muted">
+                                <a href="/user/detail/{{author_id}}">{{author_name}}</a>
+                                &nbsp;&nbsp;发布于
+                                &nbsp;&nbsp;{{created}}
+                                &nbsp;&nbsp;<span>阅读 {{visitor}}</span>
+                                &nbsp;&nbsp;<a href="/blog/edit/{{pid}}">编辑</a>
+                            </p>
+                            <p>
+                                {{#tag_list}}
+                                <span class="label label-default"><a class="search_tag" href="#">{{{tag}}}</a></span>
+                                {{/tag_list}}
+                            </p>
+                            <hr>
+                        </div>
+                        <div id="body">
+                            <textarea style="display:none;"></textarea>
+                        </div>
+                    </div>
+                    {{>right_col}}
+                </div>
+            </div>
+            {{{footer}}}
+        </div> <!-- /container -->
+        {{{script}}}
+        <script src="/assets/editor.md/lib/marked.min.js"></script>
+        <script src="/assets/editor.md/lib/prettify.min.js"></script>
+        <script src="/assets/editor.md/lib/raphael.min.js"></script>
+        <script src="/assets/editor.md/lib/underscore.min.js"></script>
+        <script src="/assets/editor.md/lib/sequence-diagram.min.js"></script>
+        <script src="/assets/editor.md/lib/flowchart.min.js"></script>
+        <script src="/assets/editor.md/lib/jquery.flowchart.min.js"></script>
+        <script src="/assets/editor.md/editormd.min.js"></script>
+        <script src="/assets/blog/article.detail.js"></script>
+    </body>
+</html>

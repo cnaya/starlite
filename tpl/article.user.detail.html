@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        {{{head}}}
+        <meta name="description" content="消息">
+        <title>用户详情</title>
+    </head>
+    <body>
+        {{{nav}}}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="text-center"></p>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr><th><a href="/user/edit/{{user_id}}">编辑</a></th><th>信息</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>名称</strong></td><td>{{user_name}}</td></tr>
+                            <tr><td><strong>头像</strong></td><td><img class="img-responsive img-thumbnail" src="{{user_image}}" /></td></tr>
+                            <tr><td><strong>简介</strong></td><td>{{user_about}}</td></tr>
+                            <tr><td><strong>文章数目</strong></td><td>{{user_article_len}}</td></tr>
+                            <tr><td><strong>加入时间</strong></td><td>{{user_created}}</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {{{footer}}}
+        </div> <!-- /container -->
+        {{{script}}}
+    </body>
+</html>

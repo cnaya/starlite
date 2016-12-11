@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        {{{head}}}
+        <title>{{title}}</title>
+        <meta name="description" content="在路上">
+        <meta name="page" content="{{page}}">
+        <meta name="key" content="{{{key}}}">
+    </head>
+    <body>
+        {{{nav}}}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-8">
+                    {{#post_list}}
+                    <div class="media">
+                        <a class="media-left" href="/user/detail/{{post_author_id}}">
+                            <img src="{{user_image}}" alt="">
+                        </a>
+                        <div class="media-body">
+                            <h3 class="media-heading article_title"><a href="/blog/detail/{{post_id}}">{{post_title}}</a></h3>
+                            <p>{{{post_abstract}}}</p>
+                            <p>
+                                <a href="/user/detail/{{post_author_id}}">{{post_author_name}}</a>
+                                &nbsp;&nbsp;发布于
+                                &nbsp;&nbsp;{{post_created}}
+                                &nbsp;&nbsp;<span>阅读 {{post_visitor}}</span>
+                            </p>
+                        </div>
+                    </div>
+                    {{/post_list}}
+                    {{^post_list}}
+                    <p>没有找到！</p>
+                    {{/post_list}}
+                    <hr>
+                    <nav class="text-center">
+                        <ul class="pagination">
+                            <li>
+                                <a role="button" class="btn btn-default btn-xs" href="#">上一页</a>
+                            </li>
+                            <li>
+                                <a role="button" class="btn btn-default btn-xs" href="#">下一页</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-md-3">
+                    {{{duoshuo_lastest}}}
+                </div>
+            </div>
+            {{{footer}}}
+        </div> <!-- /container -->
+        {{{script}}}
+        <script src="/assets/blog/article.search.js"></script>
+    </body>
+</html>
