@@ -64,7 +64,7 @@ namespace webcppd {
                             Poco::Data::Keywords::into(image),
                             Poco::Data::Keywords::use(uid),
                             Poco::Data::Keywords::now;
-                    if (!image.empty()) {
+                    if (!image.empty() && image.find("upload") == std::string::npos) {
                         Poco::File old_image(app.config().getString("http.docroot", "/var/webcppd/www") + image);
                         if (old_image.exists()) {
                             old_image.remove();

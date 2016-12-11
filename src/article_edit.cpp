@@ -45,7 +45,7 @@ namespace webcppd {
             }
             std::string uri_path = Poco::URI(request.getURI()).getPath();
             Poco::StringTokenizer st(uri_path, "/", Poco::StringTokenizer::TOK_TRIM | Poco::StringTokenizer::TOK_IGNORE_EMPTY);
-            unsigned long pid = Poco::NumberParser::parse(st[2]);
+            unsigned long pid = st.count() < 3 ? 0 : Poco::NumberParser::parse(st[2]);
             unsigned long user_id = this->session_get(request, response, "user.id").convert<unsigned long>();
 
 
@@ -54,23 +54,23 @@ namespace webcppd {
             data.set("nav", this->render_tpl("/blog/nav.html"));
             data.set("footer", this->render_tpl("/blog/footer.html"));
             data.set("script", this->render_tpl("/blog/script.html"));
-
-            Poco::Data::MySQL::Connector::registerConnector();
-            Poco::Data::Session session(Poco::Data::MySQL::Connector::KEY, root_view::mysql_connection_string());
-            Poco::Data::Statement select(session);
-            int id = 0;
-            select << "select `id` from `article` where `user`=? and `id`=? limit 1;",
-                    Poco::Data::Keywords::into(id),
-                    Poco::Data::Keywords::use(user_id),
-                    Poco::Data::Keywords::use(pid),
-                    Poco::Data::Keywords::now;
-            Poco::Data::MySQL::Connector::unregisterConnector();
-            if (!id) {
-                data.set("message", "你无权编辑。");
-                response.send() << this->render_tpl("/blog/message.html", data);
-                return;
+            if (pid) {
+                Poco::Data::MySQL::Connector::registerConnector();
+                Poco::Data::Session session(Poco::Data::MySQL::Connector::KEY, root_view::mysql_connection_string());
+                Poco::Data::Statement select(session);
+                int id = 0;
+                select << "select `id` from `article` where `user`=? and `id`=? limit 1;",
+                        Poco::Data::Keywords::into(id),
+                        Poco::Data::Keywords::use(user_id),
+                        Poco::Data::Keywords::use(pid),
+                        Poco::Data::Keywords::now;
+                Poco::Data::MySQL::Connector::unregisterConnector();
+                if (!id) {
+                    data.set("message", "你无权编辑。");
+                    response.send() << this->render_tpl("/blog/message.html", data);
+                    return;
+                }
             }
-
             std::string tpl_path("/blog/article.edit.html");
             root_view::root_cache().add(cacheKey, this->render_tpl(tpl_path, data));
             response.send() << *root_view::root_cache().get(cacheKey);
