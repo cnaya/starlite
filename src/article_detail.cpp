@@ -65,6 +65,7 @@ namespace webcppd {
                 data.set("pid", row["id"].toString());
                 data.set("title", row["head"].toString());
                 data.set("abstract", row["abstract"].toString());
+                data.set("keywords", row["keywords"].toString());
                 data.set("author_id", row["uid"].toString());
                 data.set("author_name", row["uname"].toString());
                 data.set("author_image", row["uimage"].toString());
