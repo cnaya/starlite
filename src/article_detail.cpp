@@ -68,7 +68,7 @@ namespace webcppd {
                 data.set("author_id", row["uid"].toString());
                 data.set("author_name", row["uname"].toString());
                 data.set("author_image", row["uimage"].toString());
-                data.set("post_url", (Poco::Util::Application::instance().config().getBool("http.enableSSL", true) ? "https://" : "http://") + request.getHost() + request.getURI());
+                data.set("post_url", (this->app.config().getBool("http.enableSSL", true) ? "https://" : "http://") + request.getHost() + request.getURI());
                 Poco::DateTime dt;
                 int tzd;
                 Poco::DateTimeParser::parse(Poco::DateTimeFormat::ISO8601_FORMAT, row["created"].toString(), dt, tzd);

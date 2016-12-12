@@ -27,11 +27,9 @@ namespace webcppd {
         void article_qrcode::do_get(Poco::Net::HTTPServerRequest& request, Poco::Net::HTTPServerResponse& response) {
             std::string uri_path = Poco::URI(request.getURI()).getPath();
             Poco::StringTokenizer st(uri_path, "/", Poco::StringTokenizer::TOK_TRIM | Poco::StringTokenizer::TOK_IGNORE_EMPTY);
+ 
 
-
-            Poco::Util::Application& app = Poco::Util::Application::instance();
-
-            Poco::File image_dir_path(app.config().getString("http.docroot", "/var/webcppd/www") + "/assets/qrcode");
+            Poco::File image_dir_path(this->app.config().getString("http.docroot", "/var/webcppd/www") + "/assets/qrcode");
             if (!image_dir_path.exists()) {
                 image_dir_path.createDirectories();
             }
@@ -43,7 +41,7 @@ namespace webcppd {
 
 
             response.setContentType("image/png");
-            std::string post_url = (Poco::Util::Application::instance().config().getBool("http.enableSSL", true) ? "https://" : "http://") + request.getHost() + "/blog/detail/" + st[2];
+            std::string post_url = (this->app.config().getBool("http.enableSSL", true) ? "https://" : "http://") + request.getHost() + "/blog/detail/" + st[2];
 
             webcppd::cv_qrcode image(post_url);
             if (image.created()) {

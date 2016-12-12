@@ -39,11 +39,11 @@ namespace webcppd {
                 image.stringify(response.send());
                 return;
             }
-            Poco::Util::Application &app = Poco::Util::Application::instance();
+
             webcppd::upload_handler handler("editormd-image-file|uploadImage"
-                    , app.config().getString("http.uploadAllowType", "image/png|image/gif|image/webp|image/jpeg")
-                    , app.config().getString("http.uploadDirectory", "/var/webcppd/www/upload")
-                    , app.config().getDouble("http.uploadMaxSize", 1048576)
+                    , this->app.config().getString("http.uploadAllowType", "image/png|image/gif|image/webp|image/jpeg")
+                    , this->app.config().getString("http.uploadDirectory", "/var/webcppd/www/upload")
+                    , this->app.config().getDouble("http.uploadMaxSize", 1048576)
                     );
             Poco::Net::HTMLForm form(request, request.stream(), handler);
             auto result = handler.get_data();
@@ -65,7 +65,7 @@ namespace webcppd {
                             Poco::Data::Keywords::use(uid),
                             Poco::Data::Keywords::now;
                     if (!image.empty() && image.find("upload") == std::string::npos) {
-                        Poco::File old_image(app.config().getString("http.docroot", "/var/webcppd/www") + image);
+                        Poco::File old_image(this->app.config().getString("http.docroot", "/var/webcppd/www") + image);
                         if (old_image.exists()) {
                             old_image.remove();
                         }
