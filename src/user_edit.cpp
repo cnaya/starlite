@@ -49,15 +49,14 @@ namespace webcppd {
             Poco::StringTokenizer st(uri_path, "/", Poco::StringTokenizer::TOK_TRIM | Poco::StringTokenizer::TOK_IGNORE_EMPTY);
             unsigned long uid = Poco::NumberParser::parse(st[2]);
             if (uid != this->session_get(request, response, "user.id").convert<unsigned long>()) {
-                response.send() << this->render_tpl("/blog/message.html",{"message", "你无权编辑。"});
+                Poco::SharedPtr<Kainjow::Mustache::Data> data = this->tpl_ready("/blog/config.json", "error.GET");
+                (*data)["message"] = "你无权编辑。";
+                response.send() << this->render_tpl(data->get("maintpl")->stringValue(), *data);
                 return;
             }
 
-            Kainjow::Mustache::Data data;
-            data.set("head", this->render_tpl("/blog/head.html"));
-            data.set("nav", this->render_tpl("/blog/nav.html"));
-            data.set("footer", this->render_tpl("/blog/footer.html"));
-            data.set("script", this->render_tpl("/blog/script.html"));
+            Poco::SharedPtr<Kainjow::Mustache::Data> data = this->tpl_ready("/blog/config.json", "user_edit.GET");
+
 
             Poco::Data::MySQL::Connector::registerConnector();
             Poco::Data::Session session(Poco::Data::MySQL::Connector::KEY, root_view::mysql_connection_string());
@@ -71,12 +70,11 @@ namespace webcppd {
                     Poco::Data::Keywords::use(uid),
                     Poco::Data::Keywords::now;
             Poco::Data::MySQL::Connector::unregisterConnector();
-            data.set("name", name);
-            data.set("about", about);
-            data.set("image", image);
+            data->set("name", name);
+            data->set("about", about);
+            data->set("image", image);
 
-            std::string tpl_path("/blog/article.user.edit.html");
-            root_view::root_cache().add(cacheKey, this->render_tpl(tpl_path, data));
+            root_view::root_cache().add(cacheKey, this->render_tpl(data->get("maintpl")->stringValue(), *data));
             response.send() << *root_view::root_cache().get(cacheKey);
         }
 

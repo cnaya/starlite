@@ -48,16 +48,11 @@ namespace webcppd {
                 response.send() << *root_view::root_cache().get(cacheKey);
                 return;
             }
+            Poco::SharedPtr<Kainjow::Mustache::Data> data = this->tpl_ready("/blog/config.json", "article_search.GET");
 
-            Kainjow::Mustache::Data data;
-            data.set("title", "搜索");
-            data.set("key", key);
-            data.set("page", Poco::NumberFormatter::format(page));
-            data.set("head", this->render_tpl("/blog/head.html"));
-            data.set("nav", this->render_tpl("/blog/nav.html"));
-            data.set("duoshuo_lastest", this->render_tpl("/blog/duoshuo_lastest.html"));
-            data.set("footer", this->render_tpl("/blog/footer.html"));
-            data.set("script", this->render_tpl("/blog/script.html"));
+            data->set("key", key);
+            data->set("page", Poco::NumberFormatter::format(page));
+
 
             Poco::Data::MySQL::Connector::registerConnector();
             Poco::Data::Session session(Poco::Data::MySQL::Connector::KEY, root_view::mysql_connection_string());
@@ -88,12 +83,12 @@ namespace webcppd {
                 post.set("user_image", row["uimage"].toString());
                 post_list.push_back(post);
             }
-            data.set("post_list", post_list);
+            data->set("post_list", post_list);
 
             Poco::Data::MySQL::Connector::unregisterConnector();
 
-            std::string tpl_path("/blog/article.search.html");
-            root_view::root_cache().add(cacheKey, this->render_tpl(tpl_path, data));
+
+            root_view::root_cache().add(cacheKey, this->render_tpl(data->get("maintpl")->stringValue(), *data));
             response.send() << *root_view::root_cache().get(cacheKey);
         }
 

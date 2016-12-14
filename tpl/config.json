@@ -1,0 +1,228 @@
+{
+
+    "home": {
+        "GET": {
+            "title": "主页",
+            "maintpl": "/blog/article.home.html",
+            "subtpl": [
+                {
+                    "name": "head",
+                    "path": "/blog/head.html"
+                },
+                {
+                    "name": "nav",
+                    "path": "/blog/nav.html"
+                },
+                {
+                    "name": "footer",
+                    "path": "/blog/footer.html"
+                },
+                {
+                    "name": "script",
+                    "path": "/blog/script.html"
+                }
+            ]
+        },
+        "POST": {}
+    },
+    "article_detail": {
+        "GET": {
+            "maintpl": "/blog/article.detail.html",
+            "subtpl": [
+                {
+                    "name": "head",
+                    "path": "/blog/head.html"
+                },
+                {
+                    "name": "nav",
+                    "path": "/blog/nav.html"
+                },
+                {
+                    "name": "footer",
+                    "path": "/blog/footer.html"
+                },
+                {
+                    "name": "script",
+                    "path": "/blog/script.html"
+                }
+            ]
+        },
+        "POST": {}
+    },
+    "article_edit": {
+        "GET": {
+            "title": "发布文章",
+            "maintpl": "/blog/article.edit.html",
+            "subtpl": [
+                {
+                    "name": "head",
+                    "path": "/blog/head.html"
+                },
+                {
+                    "name": "nav",
+                    "path": "/blog/nav.html"
+                },
+                {
+                    "name": "footer",
+                    "path": "/blog/footer.html"
+                },
+                {
+                    "name": "script",
+                    "path": "/blog/script.html"
+                }
+            ]
+        },
+        "POST": {}
+    },
+    "article_search": {
+        "GET": {
+            "title": "搜索",
+            "maintpl": "/blog/article.search.html",
+            "subtpl": [
+                {
+                    "name": "head",
+                    "path": "/blog/head.html"
+                },
+                {
+                    "name": "nav",
+                    "path": "/blog/nav.html"
+                },
+                {
+                    "name": "footer",
+                    "path": "/blog/footer.html"
+                },
+                {
+                    "name": "script",
+                    "path": "/blog/script.html"
+                }
+            ]
+        },
+        "POST": {}
+    },
+    "user_detail": {
+        "GET": {
+            "title": "作者详情",
+            "maintpl": "/blog/article.user.detail.html",
+            "subtpl": [
+                {
+                    "name": "head",
+                    "path": "/blog/head.html"
+                },
+                {
+                    "name": "nav",
+                    "path": "/blog/nav.html"
+                },
+                {
+                    "name": "footer",
+                    "path": "/blog/footer.html"
+                },
+                {
+                    "name": "script",
+                    "path": "/blog/script.html"
+                }
+            ]
+        },
+        "POST": {}
+    },
+    "user_edit": {
+        "GET": {
+            "title": "编辑作者信息",
+            "maintpl": "/blog/article.user.edit.html",
+            "subtpl": [
+                {
+                    "name": "head",
+                    "path": "/blog/head.html"
+                },
+                {
+                    "name": "nav",
+                    "path": "/blog/nav.html"
+                },
+                {
+                    "name": "footer",
+                    "path": "/blog/footer.html"
+                },
+                {
+                    "name": "script",
+                    "path": "/blog/script.html"
+                }
+            ]
+        },
+        "POST": {}
+    },
+    "user_login": {
+        "GET": {
+            "title": "作者登陆",
+            "maintpl": "/blog/article.user.login.html",
+            "subtpl": [
+                {
+                    "name": "head",
+                    "path": "/blog/head.html"
+                },
+                {
+                    "name": "nav",
+                    "path": "/blog/nav.html"
+                },
+                {
+                    "name": "footer",
+                    "path": "/blog/footer.html"
+                },
+                {
+                    "name": "script",
+                    "path": "/blog/script.html"
+                }
+            ]
+        },
+        "POST": {}
+    },
+    "user_logout": {
+        "GET": {
+            "title": "作者退出",
+            "maintpl": "/blog/article.user.logout.html",
+            "subtpl": [
+                {
+                    "name": "head",
+                    "path": "/blog/head.html"
+                },
+                {
+                    "name": "nav",
+                    "path": "/blog/nav.html"
+                },
+                {
+                    "name": "footer",
+                    "path": "/blog/footer.html"
+                },
+                {
+                    "name": "script",
+                    "path": "/blog/script.html"
+                }
+            ]
+        },
+        "POST": {}
+    },
+    "error": {
+        "GET": {
+            "title": "消息",
+            "message": "错误访问",
+            "maintpl": "/blog/message.html",
+            "subtpl": [
+                {
+                    "name": "head",
+                    "path": "/blog/head.html"
+                },
+                {
+                    "name": "nav",
+                    "path": "/blog/nav.html"
+                },
+                {
+                    "name": "footer",
+                    "path": "/blog/footer.html"
+                },
+                {
+                    "name": "script",
+                    "path": "/blog/script.html"
+                }
+            ]
+        },
+        "POST": {}
+    }
+}

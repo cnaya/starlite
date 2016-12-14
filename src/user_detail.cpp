@@ -43,11 +43,9 @@ namespace webcppd {
                 response.send() << *root_view::root_cache().get(cacheKey);
                 return;
             }
-            Kainjow::Mustache::Data data;
-            data.set("head", this->render_tpl("/blog/head.html"));
-            data.set("nav", this->render_tpl("/blog/nav.html"));
-            data.set("footer", this->render_tpl("/blog/footer.html"));
-            data.set("script", this->render_tpl("/blog/script.html"));
+
+            Poco::SharedPtr<Kainjow::Mustache::Data> data = this->tpl_ready("/blog/config.json", "user_detail.GET");
+
 
             Poco::Data::MySQL::Connector::registerConnector();
             Poco::Data::Session session(Poco::Data::MySQL::Connector::KEY, root_view::mysql_connection_string());
@@ -59,27 +57,28 @@ namespace webcppd {
             if (select.execute()) {
                 Poco::Data::RecordSet rs(select);
                 Poco::Data::Row& row = rs.row(0);
-                data.set("user_id", row["id"].toString());
-                data.set("user_name", row["name"].toString());
-                data.set("user_about", row["about"].toString());
-                data.set("user_image", row["image"].toString());
-                data.set("user_article_len", row["len"].toString());
+                data->set("user_id", row["id"].toString());
+                data->set("user_name", row["name"].toString());
+                data->set("user_about", row["about"].toString());
+                data->set("user_image", row["image"].toString());
+                data->set("user_article_len", row["len"].toString());
                 Poco::DateTime dt;
                 int tzd;
                 Poco::DateTimeParser::parse(Poco::DateTimeFormat::ISO8601_FORMAT, row["created"].toString(), dt, tzd);
                 dt.makeLocal(tzd);
-                data.set("user_created", Poco::DateTimeFormatter::format(dt, Poco::DateTimeFormat::HTTP_FORMAT));
+                data->set("user_created", Poco::DateTimeFormatter::format(dt, Poco::DateTimeFormat::HTTP_FORMAT));
 
 
                 Poco::Data::MySQL::Connector::unregisterConnector();
             } else {
-                data.set("message", "没有找到。");
-                response.send() << this->render_tpl("/blog/message.html", data);
+                data->set("title", "消息");
+                data->set("message", "没有找到。");
+                response.send() << this->render_tpl("/blog/message.html", *data);
                 return;
             }
 
-            std::string tpl_path("/blog/article.user.detail.html");
-            root_view::root_cache().add(cacheKey, this->render_tpl(tpl_path, data));
+
+            root_view::root_cache().add(cacheKey, this->render_tpl(data->get("maintpl")->stringValue(), *data));
             response.send() << *root_view::root_cache().get(cacheKey);
         }
 

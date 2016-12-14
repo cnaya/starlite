@@ -37,14 +37,10 @@ namespace webcppd {
                 return;
             }
 
-            Kainjow::Mustache::Data data;
-            data.set("head", this->render_tpl("/blog/head.html"));
-            data.set("nav", this->render_tpl("/blog/nav.html"));
-            data.set("footer", this->render_tpl("/blog/footer.html"));
-            data.set("script", this->render_tpl("/blog/script.html"));
+            Poco::SharedPtr<Kainjow::Mustache::Data> data = this->tpl_ready("/blog/config.json", "user_logout.GET");
 
-            std::string tpl_path("/blog/article.user.logout.html");
-            root_view::root_cache().add(cacheKey, this->render_tpl(tpl_path, data));
+
+            root_view::root_cache().add(cacheKey, this->render_tpl(data->get("maintpl")->stringValue(), *data));
             response.send() << *root_view::root_cache().get(cacheKey);
         }
 

@@ -48,12 +48,9 @@ namespace webcppd {
             unsigned long pid = st.count() < 3 ? 0 : Poco::NumberParser::parse(st[2]);
             unsigned long user_id = this->session_get(request, response, "user.id").convert<unsigned long>();
 
+            Poco::SharedPtr<Kainjow::Mustache::Data> data = this->tpl_ready("/blog/config.json", "article_edit.GET");
 
-            Kainjow::Mustache::Data data;
-            data.set("head", this->render_tpl("/blog/head.html"));
-            data.set("nav", this->render_tpl("/blog/nav.html"));
-            data.set("footer", this->render_tpl("/blog/footer.html"));
-            data.set("script", this->render_tpl("/blog/script.html"));
+
             if (pid) {
                 Poco::Data::MySQL::Connector::registerConnector();
                 Poco::Data::Session session(Poco::Data::MySQL::Connector::KEY, root_view::mysql_connection_string());
@@ -66,13 +63,15 @@ namespace webcppd {
                         Poco::Data::Keywords::now;
                 Poco::Data::MySQL::Connector::unregisterConnector();
                 if (!id) {
-                    data.set("message", "你无权编辑。");
-                    response.send() << this->render_tpl("/blog/message.html", data);
+                    (*data)["title"] = "消息";
+                    (*data)["message"] = "你无权编辑。";
+                    (*data)["maintpl"] = "/blog/message.html";
+                    response.send() << this->render_tpl(data->get("maintpl")->stringValue(), *data);
                     return;
                 }
             }
-            std::string tpl_path("/blog/article.edit.html");
-            root_view::root_cache().add(cacheKey, this->render_tpl(tpl_path, data));
+
+            root_view::root_cache().add(cacheKey, this->render_tpl(data->get("maintpl")->stringValue(), *data));
             response.send() << *root_view::root_cache().get(cacheKey);
         }
 

@@ -43,12 +43,9 @@ namespace webcppd {
                 response.send() << *root_view::root_cache().get(cacheKey);
                 return;
             }
+            Poco::SharedPtr<Kainjow::Mustache::Data> data = this->tpl_ready("/blog/config.json", "article_detail.GET");
 
-            Kainjow::Mustache::Data data;
-            data.set("head", this->render_tpl("/blog/head.html"));
-            data.set("nav", this->render_tpl("/blog/nav.html"));
-            data.set("footer", this->render_tpl("/blog/footer.html"));
-            data.set("script", this->render_tpl("/blog/script.html"));
+
 
             Poco::Data::MySQL::Connector::registerConnector();
             Poco::Data::Session session(Poco::Data::MySQL::Connector::KEY, root_view::mysql_connection_string());
@@ -62,19 +59,19 @@ namespace webcppd {
             if (select.execute()) {
                 Poco::Data::RecordSet rs(select);
                 Poco::Data::Row& row = rs.row(0);
-                data.set("pid", row["id"].toString());
-                data.set("title", row["head"].toString());
-                data.set("abstract", row["abstract"].toString());
-                data.set("keywords", row["keywords"].toString());
-                data.set("author_id", row["uid"].toString());
-                data.set("author_name", row["uname"].toString());
-                data.set("author_image", row["uimage"].toString());
-                data.set("post_url", (this->app.config().getBool("http.enableSSL", true) ? "https://" : "http://") + request.getHost() + request.getURI());
+                data->set("pid", row["id"].toString());
+                data->set("title", row["head"].toString());
+                data->set("abstract", row["abstract"].toString());
+                data->set("keywords", row["keywords"].toString());
+                data->set("author_id", row["uid"].toString());
+                data->set("author_name", row["uname"].toString());
+                data->set("author_image", row["uimage"].toString());
+                data->set("post_url", (this->app.config().getBool("http.enableSSL", true) ? "https://" : "http://") + request.getHost() + request.getURI());
                 Poco::DateTime dt;
                 int tzd;
                 Poco::DateTimeParser::parse(Poco::DateTimeFormat::ISO8601_FORMAT, row["created"].toString(), dt, tzd);
                 dt.makeLocal(tzd);
-                data.set("created", Poco::DateTimeFormatter::format(dt, Poco::DateTimeFormat::HTTP_FORMAT));
+                data->set("created", Poco::DateTimeFormatter::format(dt, Poco::DateTimeFormat::HTTP_FORMAT));
                 Poco::StringTokenizer tag_st(row["keywords"].toString(), ",", Poco::StringTokenizer::TOK_TRIM | Poco::StringTokenizer::TOK_IGNORE_EMPTY);
                 Kainjow::Mustache::Data tag_list = Kainjow::Mustache::Data::List();
                 for (auto &item : tag_st) {
@@ -82,22 +79,20 @@ namespace webcppd {
                     tag.set("tag", item);
                     tag_list.push_back(tag);
                 }
-                data.set("tag_list", tag_list);
-                data.set("visitor", row["visitor"].toString());
-                Kainjow::Mustache::Data::PartialType right_col{[&]() {
-                        return this->render_tpl("/blog/right_col.html");
-                    }};
-                data.set("right_col", right_col);
+                data->set("tag_list", tag_list);
+                data->set("visitor", row["visitor"].toString());
+
 
                 Poco::Data::MySQL::Connector::unregisterConnector();
             } else {
-                data.set("message", "没有找到。");
-                response.send() << this->render_tpl("/blog/message.html", data);
+                data->set("title", "消息");
+                data->set("message", "没有找到。");
+                response.send() << this->render_tpl("/blog/message.html", *data);
                 return;
             }
 
-            std::string tpl_path("/blog/article.detail.html");
-            root_view::root_cache().add(cacheKey, this->render_tpl(tpl_path, data));
+
+            root_view::root_cache().add(cacheKey, this->render_tpl(data->get("maintpl")->stringValue(), *data));
             response.send() << *root_view::root_cache().get(cacheKey);
         }
 

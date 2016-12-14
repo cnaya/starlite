@@ -17,8 +17,19 @@
 #include <Poco/Data/RecordSet.h>
 #include <Poco/Data/Row.h>
 #include <Poco/URI.h>
-#include <Poco/JSON/Object.h>
 #include <Poco/Net/HTMLForm.h>
+#include <Poco/JSON/JSON.h>
+#include <Poco/FileStream.h>
+#include <Poco/StreamCopier.h>
+#include <Poco/JSON/Object.h>
+#include <Poco/JSON/Parser.h>
+#include <Poco/JSON/Array.h>
+#include <Poco/Dynamic/Var.h>
+#include <Poco/JSON/Query.h>
+#include <Poco/Dynamic/Struct.h>
+#include <Poco/JSON/Template.h>
+#include <fstream>
+
 
 
 #include "home.hpp"
@@ -38,13 +49,9 @@ namespace webcppd {
                 return;
             }
 
-            Kainjow::Mustache::Data data;
-            data.set("title", "首页");
-            data.set("head", this->render_tpl("/blog/head.html"));
-            data.set("nav", this->render_tpl("/blog/nav.html"));
-            data.set("duoshuo_lastest", this->render_tpl("/blog/duoshuo_lastest.html"));
-            data.set("footer", this->render_tpl("/blog/footer.html"));
-            data.set("script", this->render_tpl("/blog/script.html"));
+
+            Poco::SharedPtr<Kainjow::Mustache::Data> data = this->tpl_ready("/blog/config.json", "home.GET");
+
 
             Poco::Data::MySQL::Connector::registerConnector();
             Poco::Data::Session session(Poco::Data::MySQL::Connector::KEY, root_view::mysql_connection_string());
@@ -73,15 +80,15 @@ namespace webcppd {
                 post.set("user_image", row["uimage"].toString());
                 post_list.push_back(post);
             }
-            data.set("post_list", post_list);
+            data->set("post_list", post_list);
             if (this->session_has(request, response, "user.id")) {
-                data.set("user_id", this->session_get(request, response, "user.id").convert<std::string>());
+                data->set("user_id", this->session_get(request, response, "user.id").convert<std::string>());
             }
 
             Poco::Data::MySQL::Connector::unregisterConnector();
 
-            std::string tpl_path("/blog/article.home.html");
-            root_view::root_cache().add(cacheKey, this->render_tpl(tpl_path, data));
+            
+            root_view::root_cache().add(cacheKey, this->render_tpl(data->get("maintpl")->stringValue(), *data));
             response.send() << *root_view::root_cache().get(cacheKey);
         }
 
