@@ -85,9 +85,10 @@ namespace webcppd {
 
                 Poco::Data::MySQL::Connector::unregisterConnector();
             } else {
-                data->set("title", "消息");
-                data->set("message", "没有找到。");
-                response.send() << this->render_tpl("/blog/message.html", *data);
+                (*data)["title"] = "消息";
+                (*data)["message"] = "没有找到。";
+                (*data)["maintpl"] = "/blog/message.html";
+                response.send() << this->render_tpl(data->get("maintpl")->stringValue(), *data);
                 return;
             }
 
