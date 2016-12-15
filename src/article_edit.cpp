@@ -128,11 +128,6 @@ namespace webcppd {
                 }
 
                 if (select.execute()) {
-                    if (pid) {
-                        std::string tmp_uri = Poco::format("/blog/detail/%[0]lu", pid);
-                        root_view::root_cache().remove(tmp_uri);
-                        root_view::root_cache().remove(Poco::Net::HTTPServerRequest::HTTP_POST + tmp_uri);
-                    }
                     int insertId = pid ? pid : Poco::AnyCast<Poco::UInt64>(session.getProperty("insertId"));
 
                     result.set("ok", true);

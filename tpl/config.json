@@ -2,7 +2,7 @@
 
     "home": {
         "GET": {
-            "title": "主页",
+            "title": "星空博客主页",
             "maintpl": "/blog/article.home.html",
             "subtpl": [
                 {
@@ -51,7 +51,7 @@
     },
     "article_edit": {
         "GET": {
-            "title": "发布文章",
+            "title": "星空博客发布文章",
             "maintpl": "/blog/article.edit.html",
             "subtpl": [
                 {
@@ -76,7 +76,7 @@
     },
     "article_search": {
         "GET": {
-            "title": "搜索",
+            "title": "星空博客搜索",
             "maintpl": "/blog/article.search.html",
             "subtpl": [
                 {
@@ -101,7 +101,7 @@
     },
     "user_detail": {
         "GET": {
-            "title": "作者详情",
+            "title": "星空博客作者详情",
             "maintpl": "/blog/article.user.detail.html",
             "subtpl": [
                 {
@@ -126,7 +126,7 @@
     },
     "user_edit": {
         "GET": {
-            "title": "编辑作者信息",
+            "title": "星空博客编辑作者信息",
             "maintpl": "/blog/article.user.edit.html",
             "subtpl": [
                 {
@@ -151,7 +151,7 @@
     },
     "user_login": {
         "GET": {
-            "title": "作者登陆",
+            "title": "星空博客作者登陆",
             "maintpl": "/blog/article.user.login.html",
             "subtpl": [
                 {
@@ -176,7 +176,7 @@
     },
     "user_logout": {
         "GET": {
-            "title": "作者退出",
+            "title": "星空博客作者退出",
             "maintpl": "/blog/article.user.logout.html",
             "subtpl": [
                 {
@@ -201,7 +201,7 @@
     },
     "error": {
         "GET": {
-            "title": "消息",
+            "title": "星空博客消息",
             "message": "错误访问",
             "maintpl": "/blog/message.html",
             "subtpl": [

@@ -108,7 +108,7 @@ namespace webcppd {
             Poco::Data::Session session(Poco::Data::MySQL::Connector::KEY, root_view::mysql_connection_string());
             Poco::Data::Statement select(session);
 
-            std::string cacheKey(request.getMethod() + uri_path);
+            std::string cacheKey(this->create_cache_key(request,response));
 
             if (root_view::root_cache().has(cacheKey)) {
                 select << "update `article` set `visitor`=`visitor`+1 where `id`=?; ",
