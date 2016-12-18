@@ -2,6 +2,8 @@
 ---
 基于webcppd的Markdown博客程序
 
+![](https://github.com/webcpp/starlite/raw/master/assets/blog/starlite-log.png)
+
 ## 依赖
 - webcppd
 - opencv-devel
