@@ -59,7 +59,7 @@ namespace webcppd {
             Poco::Data::Statement select(session);
             int low_limit = (page - 1)*5;
             select << "SELECT  A.`id`  as `pid`,B.`id` as `uid`,B.`name` as `uname`, A.`head`, A.`abstract`, A.`created`,A.`visitor`,B.`image` as `uimage` "
-                    "FROM  `article` A inner join `article_user` B on A.`user`=B.`id` where match(`head` , `keywords` , `abstract` , `body`) AGAINST (?) limit ?,5;",
+                    "FROM  `article` A inner join `article_user` B on A.`user`=B.`id` where  A.`permission` = TRUE AND A.`publish` = TRUE and match(`head` , `keywords` , `abstract` , `body`) AGAINST (?) limit ?,5;",
                     Poco::Data::Keywords::use(key),
                     Poco::Data::Keywords::use(low_limit);
             select.execute();
