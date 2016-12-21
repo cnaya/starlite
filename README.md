@@ -6,10 +6,12 @@
 
 ## 依赖
 - webcppd
+
  ### centos
   - opencv-devel
   - cryptopp-devel
   - qrencode-devel
+
  ### ubuntu 
   - libopencv-dev
   - libcrypto++-dev
