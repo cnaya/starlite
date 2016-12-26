@@ -7,33 +7,31 @@
 ## 依赖
 - webcppd
 
- ### centos
-  - opencv-devel
-  - cryptopp-devel
-  - qrencode-devel
+ - centos
+   - sudo yum -y install opencv-devel cryptopp-devel qrencode-devel
 
- ### ubuntu 
-  - libopencv-dev
-  - libcrypto++-dev
-  - libqrencode-dev
-  - 执行`make`前，请将`Makefile`中的`cryptopp`改为`libcrypto++`
+ - ubuntu 
+   - sudo apt-get -y install libopencv-dev libcrypto++-dev libqrencode-dev
 
-## 前端
-- Jquery
-- Bootstrap
-- Layer
-- Editor.md
+## 安装
 
-## 后端
-- C++
+`make && sudo make install && sudo systemctl restart webcppd`
 
-## 模板引擎
-- mustache
+## 特性
+ - 前端
+   - Jquery
+   - Bootstrap
+   - Layer
+   - Editor.md
 
-## 数据库
-- MariaDB/MySQL
+ - 后端
+   - C++
 
-MySQL v5.6+用户可以直接把`db/db.sql`中的`ENGINE=Mroonga`改为`ENGINE=INNODB`。
-MariaDB用户需安装`Mroonga`存储引擎以支持全文搜索，具体请参考：
-[https://mariadb.com/kb/en/mariadb/about-mroonga/](https://mariadb.com/kb/en/mariadb/about-mroonga/)
+ -  模板引擎
+    - mustache
+
+ - 数据库
+    - MariaDB/MySQL
+       - MySQL v5.6+用户可以直接把`db/db.sql`中的`ENGINE=Mroonga`改为`ENGINE=INNODB`。
+       - MariaDB用户需安装`Mroonga`存储引擎以支持全文搜索，具体请参考：[https://mariadb.com/kb/en/mariadb/about-mroonga/](https://mariadb.com/kb/en/mariadb/about-mroonga/)
  
