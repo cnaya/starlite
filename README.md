@@ -7,11 +7,12 @@
 ## 依赖
 - webcppd
 
- - centos
-   - sudo yum -y install opencv-devel cryptopp-devel qrencode-devel
+- 其他
+  - centos
+    - sudo yum -y install opencv-devel cryptopp-devel qrencode-devel
 
- - ubuntu 
-   - sudo apt-get -y install libopencv-dev libcrypto++-dev libqrencode-dev
+  - ubuntu 
+    - sudo apt-get -y install libopencv-dev libcrypto++-dev libqrencode-dev
 
 ## 安装
 
